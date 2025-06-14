@@ -20,8 +20,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Home() {
   
-  const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState('');
   const [appointments, setAppointments] = useState<AppointmentsProps[]>([]);
 
   const navigation = useNavigation();
