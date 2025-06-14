@@ -5,7 +5,7 @@ export const Container = styled.TextInput`
   width: 100%;
   height: 95px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 21px;
   margin-right: 4px;
   border-width: 1px;
   padding-top: 16px;

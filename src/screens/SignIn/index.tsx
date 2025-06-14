@@ -1,18 +1,14 @@
-import {
-  Container,
-  Content,
-  Image,
-  SubTitle,
-  Title
-} from "./styles";
+import { theme } from "../../global/styles/theme";
+import { Container, Content, Image, SubTitle, Title } from "./styles";
 
-// import { useNavigation } from "@react-navigation/native";
 import IllustrationImg from "../../assets/illustration.png";
-import { ButtonIcon } from "../../components/ButtonIcon";
-import { Background } from "../../components/Background";
+
 import { useAuth } from "../../hooks/auth";
 import { Alert, ActivityIndicator } from "react-native";
-import { theme } from "../../global/styles/theme";
+
+import { ButtonIcon } from "../../components/ButtonIcon";
+import { Background } from "../../components/Background";
+// import { useNavigation } from "@react-navigation/native";
 
 export function SignIn() {
   const { primary } = theme.colors;
