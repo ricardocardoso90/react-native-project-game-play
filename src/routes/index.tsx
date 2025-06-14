@@ -8,11 +8,11 @@ export function Routes() {
 
   return (
     <NavigationContainer>
-      {/* {user.id
+      {user.id
         ? <AppRoutes />
         : <SignIn />
-      } */}
-      <AppRoutes />
+      }
+      {/* <AppRoutes /> */}
     </NavigationContainer>
   )
 }

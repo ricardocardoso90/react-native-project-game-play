@@ -1,18 +1,20 @@
 import { FlatList } from "react-native";
+import { useEffect, useState } from "react";
 import { Container, styles } from "./styles";
+
+import { api } from "../../services/api";
+import { Load } from "../../components/Load";
 import { Guild, GuildProps } from "../../components/Guild";
 import { ListDivider } from "../../components/ListDivider";
-import { useEffect, useState } from "react";
-import { Load } from "../../components/Load";
-import { api } from "../../services/api";
 
 type Props = {
   handleGuildsSelect: (Guild: GuildProps) => void;
 };
 
 export function Guilds({ handleGuildsSelect }: Props) {
-  const [guilds, setGuilds] = useState<GuildProps[]>([]);
+  
   const [loading, setLoading] = useState(true);
+  const [guilds, setGuilds] = useState<GuildProps[]>([]);
 
   async function fetchGuilds() {
     const response = await api.get('/users/@me/guilds');
@@ -21,7 +23,7 @@ export function Guilds({ handleGuildsSelect }: Props) {
   };
 
   useEffect(() => {
-    // fetchGuilds();
+    fetchGuilds();
   }, []);
 
   return (
