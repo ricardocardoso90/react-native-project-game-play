@@ -1,23 +1,12 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useEffect,
-} from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { useAuthRequest, ResponseType, makeRedirectUri, } from "expo-auth-session";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
-import {
-  useAuthRequest,
-  ResponseType,
-  makeRedirectUri,
-} from "expo-auth-session";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const extra = Constants.expoConfig?.extra || {};
 const CLIENT_ID = extra.CLIENT_ID || "";
 const CDN_IMAGE = extra.CDN_IMAGE || "https://cdn.discordapp.com";
-
 const { COLLECTION_USERS } = require("../configs/database");
 
 type User = {
@@ -43,8 +32,8 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextData);
 
 const discovery = {
-  authorizationEndpoint: "https://discord.com/api/oauth2/authorize",
   tokenEndpoint: "https://discord.com/api/oauth2/token",
+  authorizationEndpoint: "https://discord.com/api/oauth2/authorize",
   revocationEndpoint: "https://discord.com/api/oauth2/token/revoke",
 };
 
@@ -52,14 +41,10 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>({} as User);
   const [loading, setLoading] = useState(false);
 
-  // Detecta ambiente para usar o redirectUri correto
-  const isExpoGo = Constants.appOwnership === "expo";
+  const isExpoGo = Constants.executionEnvironment === "storeClient";
   const redirectUri = isExpoGo
-    ? makeRedirectUri({ useProxy: true })
-    : extra.REDIRECT_URI || makeRedirectUri({ useProxy: false });
-
-  console.log("CLIENT_ID usado:", CLIENT_ID);
-  console.log("Redirect URI enviada:", redirectUri);
+    ? extra.REDIRECT_URI || makeRedirectUri()
+    : makeRedirectUri();
 
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -74,16 +59,12 @@ function AuthProvider({ children }: AuthProviderProps) {
   async function signIn() {
     try {
       setLoading(true);
-      console.log("Iniciando login com Discord...");
       const result = await promptAsync();
-      console.log("Resultado do promptAsync:", result);
 
       if (result.type !== "success") {
-        console.log("Login cancelado ou falhou");
         setLoading(false);
       }
     } catch (error) {
-      console.log("Erro ao autenticar", error);
       setLoading(false);
     }
   }
@@ -103,13 +84,49 @@ function AuthProvider({ children }: AuthProviderProps) {
   }
 
   useEffect(() => {
-    if (response?.type === "success" && response.authentication?.accessToken) {
-      fetch("https://discord.com/api/users/@me", {
+    console.log("=== USEEFFECT RESPONSE ===");
+    console.log("Response:", JSON.stringify(response, null, 2));
+    
+    if (response?.type === "success" && response.params?.code) {
+      console.log("✅ Código de autorização recebido, trocando por token...");
+      setLoading(true);
+      
+      const tokenData = {
+        client_id: CLIENT_ID,
+        client_secret: '',
+        grant_type: 'authorization_code',
+        code: response.params.code,
+        redirect_uri: redirectUri,
+      };
+      
+      fetch('https://discord.com/api/oauth2/token', {
+        method: 'POST',
         headers: {
-          Authorization: `Bearer ${response.authentication.accessToken}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
+        body: new URLSearchParams(tokenData).toString(),
       })
-        .then((res) => res.json())
+        .then(res => res.json())
+        .then(tokenResponse => {
+          console.log('Token response:', tokenResponse);
+          if (tokenResponse.access_token) {
+            // Agora buscar os dados do usuário
+            return fetch("https://discord.com/api/v9/users/@me", {
+              headers: {
+                Authorization: `Bearer ${tokenResponse.access_token}`,
+              },
+            });
+          } else {
+            throw new Error('Token não recebido');
+          }
+        })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          } else {
+            return res.json();
+          }
+        })
         .then(async (userInfo) => {
           const firstName = userInfo.username.split(" ")[0];
           const avatar = `${CDN_IMAGE}/avatars/${userInfo.id}/${userInfo.avatar}.png`;
@@ -117,7 +134,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           const userData = {
             ...userInfo,
             firstName,
-            token: response.authentication.accessToken,
+            token: response.authentication!.accessToken,
             avatar,
           };
 
@@ -126,9 +143,17 @@ function AuthProvider({ children }: AuthProviderProps) {
           setLoading(false);
         })
         .catch((err) => {
-          console.log("Erro ao buscar usuário do Discord", err);
+          console.error("Erro ao buscar usuário do Discord:", err);
+          console.error("Response type:", response?.type);
+          console.error("Authentication:", response?.authentication);
           setLoading(false);
         });
+    } else if (response?.type === "error") {
+      setLoading(false);
+    } else if (response?.type === "cancel") {
+      setLoading(false);
+    } else if (response?.type === "dismiss") {
+      setLoading(false);
     } else if (response?.type !== undefined) {
       setLoading(false);
     }
@@ -139,14 +164,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        loading,
-        signIn,
-        signOut,
-      }}
-    >
+    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
@@ -157,4 +175,4 @@ function useAuth() {
   return context;
 }
 
-export { AuthProvider, useAuth};
+export { AuthProvider, useAuth };
