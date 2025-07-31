@@ -23,9 +23,9 @@ export function SignIn(){
     try {
       await signIn();
     }catch (error) {
-      Alert.alert(error);
-    }
-  }
+      console.log(error);
+    };
+  };
 
   return(
     <Background>

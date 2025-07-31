@@ -2,6 +2,7 @@
   "expo": {
     "name": "react-native-project-game-play",
     "slug": "react-native-project-game-play",
+    "scheme": "reactnativegameplay",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -27,6 +28,11 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "CLIENT_ID": "1217621152789430434",
+      "REDIRECT_URI": "https://auth.expo.io/@ricardocardoso90/react-native-project-game-play",
+      "CDN_IMAGE": "https://cdn.discordapp.com"
+    }
   }
 }

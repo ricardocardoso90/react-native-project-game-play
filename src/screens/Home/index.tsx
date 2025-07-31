@@ -32,7 +32,7 @@ export function Home() {
   } 
   
   function handleAppointmentCreate() {
-    navigation.navigate('AppointmentCreate');
+    navigation.navigate('AppointmentCreate' as never);
   } 
   
   async function loadAppointments() {
