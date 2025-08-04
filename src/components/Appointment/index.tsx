@@ -1,10 +1,10 @@
-import React from 'react';
+import { View, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
-import { View, Text } from 'react-native';
 
-import { theme } from '../../global/styles/theme';
 import { styles } from './styles';
+import { theme } from '../../global/styles/theme';
+
 import PlayerSvg from '../../assets/player.svg';
 import CalendarSvg from '../../assets/calendar.svg';
 
@@ -19,11 +19,11 @@ export type AppointmentProps = {
   category: string;
   date: string;
   description: string;
-}
+};
 
 type Props = RectButtonProps & {
   data: AppointmentProps;
-} 
+};
 
 export function Appointment({ data, ...rest }: Props) {
   const [category] = categories.filter(item => item.id === data.category);
@@ -33,7 +33,7 @@ export function Appointment({ data, ...rest }: Props) {
   return (
     <RectButton {...rest}>
       <View style={styles.container}>
-        <LinearGradient 
+        <LinearGradient
           style={styles.guildIconContainer}
           colors={[secondary50, secondary70]}
         >
@@ -43,11 +43,11 @@ export function Appointment({ data, ...rest }: Props) {
         <View style={styles.content}>
           <View style={styles.header}>
             <Text style={styles.title}>
-              { data.guild.name }
+              {data.guild.name}
             </Text>
 
             <Text style={styles.category}>
-              { category.title }
+              {category.title}
             </Text>
           </View>
 
@@ -56,20 +56,20 @@ export function Appointment({ data, ...rest }: Props) {
               <CalendarSvg />
 
               <Text style={styles.date}>
-                { data.date }                
+                {data.date}
               </Text>
             </View>
 
             <View style={styles.playersInfo}>
-              <PlayerSvg fill={ owner ? primary : on}/>
+              <PlayerSvg fill={owner ? primary : on} />
 
               <Text style={[
-                styles.player, 
+                styles.player,
                 { color: owner ? primary : on }
               ]}>
-                { owner ? 'Anfitrião' : 'Visitante' }
+                {owner ? 'Anfitrião' : 'Visitante'}
               </Text>
-            </View>          
+            </View>
           </View>
         </View>
       </View>
