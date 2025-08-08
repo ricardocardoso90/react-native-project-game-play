@@ -26,9 +26,9 @@ type Props = RectButtonProps & {
 };
 
 export function Appointment({ data, ...rest }: Props) {
-  const [category] = categories.filter(item => item.id === data.category);
   const { owner } = data.guild;
   const { primary, on, secondary50, secondary70 } = theme.colors;
+  const [category] = categories.filter(item => item.id === data.category);
 
   return (
     <RectButton {...rest}>

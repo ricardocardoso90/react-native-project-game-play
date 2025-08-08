@@ -26,15 +26,15 @@ export function Home() {
 
   function handleCategorySelect(categoryId: string) {
     categoryId === category ? setCategory('') : setCategory(categoryId);
-  }
+  };
 
   function handleAppointmentDetails(guildSelected: AppointmentProps) {
     navigation.navigate('AppointmentDetails', { guildSelected });
-  }
+  };
 
   function handleAppointmentCreate() {
     navigation.navigate('AppointmentCreate');
-  }
+  };
 
   async function loadAppointments() {
     const response = await AsyncStorage.getItem(COLLECTION_APPOINTMENTS);
@@ -66,7 +66,9 @@ export function Home() {
       />
 
       {
-        loading ? <Load /> :
+        loading
+          ? <Load />
+          :
           <>
             <ListHeader
               title="Partidas agendadas"
@@ -91,4 +93,4 @@ export function Home() {
       }
     </Background>
   );
-}
+};

@@ -20,13 +20,13 @@ export function AppRoutes() {
       screenOptions={{
         headerShown: false,
         cardStyle: {
-          backgroundColor: theme.colors.secondary100
+          backgroundColor: theme.colors.secondary100,
         }
       }}
     >
       <Screen name="Home" component={Home} />
-      <Screen name="AppointmentDetails" component={AppointmentDetails} />
       <Screen name="AppointmentCreate" component={AppointmentCreate} />
+      <Screen name="AppointmentDetails" component={AppointmentDetails} />
     </Navigator>
   );
-}
+};
