@@ -6,14 +6,14 @@ import { COLLECTION_APPOINTMENTS } from '../../configs/database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
+import { Load } from '../../components/Load';
+import { Profile } from '../../components/Profile';
 import { ButtonAdd } from '../../components/ButtonAdd';
 import { ListHeader } from '../../components/ListHeader';
 import { Background } from '../../components/Background';
-import { Load } from '../../components/Load';
-import { Profile } from '../../components/Profile';
 import { ListDivider } from '../../components/ListDivider';
-import { Appointment, AppointmentProps } from '../../components/Appointment';
 import { CategorySelect } from '../../components/CategorySelect';
+import { Appointment, AppointmentProps } from '../../components/Appointment';
 
 import { RoutesProps } from '../../routes/app.routes';
 
@@ -90,7 +90,7 @@ export function Home() {
               showsVerticalScrollIndicator={false}
             />
           </>
-      }
+      };
     </Background>
   );
 };

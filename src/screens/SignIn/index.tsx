@@ -1,9 +1,8 @@
 import { styles } from './styles';
+import { theme } from '../../global/styles/theme';
 import { View, Text, Image, ActivityIndicator } from 'react-native';
 
 import { useAuth } from '../../hooks/auth';
-import { theme } from '../../global/styles/theme';
-
 import IllustrationImg from '../../assets/illustration.png';
 
 import { ButtonIcon } from '../../components/ButtonIcon';
@@ -52,4 +51,4 @@ export function SignIn() {
       </View>
     </Background>
   );
-}
+};

@@ -3,7 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
 import { styles } from './styles';
-import { theme } from '../../global/styles/theme';
+import { theme } from '../../hooks/theme';
 
 import PlayerSvg from '../../assets/player.svg';
 import CalendarSvg from '../../assets/calendar.svg';
@@ -75,5 +75,4 @@ export function Appointment({ data, ...rest }: Props) {
       </View>
     </RectButton>
   )
-
-}
+};

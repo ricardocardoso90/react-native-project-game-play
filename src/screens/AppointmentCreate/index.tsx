@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
+import { styles } from './styles';
+import { Guilds } from '../Guilds';
+import { useState } from 'react';
 import { Feather } from '@expo/vector-icons';
-import { RectButton } from 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { theme } from '../../global/styles/theme';
+
 import uuid from 'react-native-uuid';
 
+import { RectButton } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text, View, Platform, ScrollView, KeyboardAvoidingView, } from 'react-native';
 
-import { COLLECTION_APPOINTMENTS } from '../../configs/database';
-import { theme } from '../../global/styles/theme';
-import { styles } from './styles';
 
-import { CategorySelect } from '../../components/CategorySelect';
+import { COLLECTION_APPOINTMENTS } from '../../configs/database';
+
+import { Button } from '../../components/Button';
+import { Header } from '../../components/Header';
+import { GuildProps } from '../../components/Guild';
 import { ModalView } from '../../components/ModalView';
 import { Background } from '../../components/Background';
 import { SmallInput } from '../../components/SmallInput';
 import { GuildIcon } from '../../components/GuildIcon';
 import { TextArea } from '../../components/TextArea';
-import { GuildProps } from '../../components/Guild';
-import { Header } from '../../components/Header';
-import { Button } from '../../components/Button';
-import { Guilds } from '../Guilds';
+import { CategorySelect } from '../../components/CategorySelect';
 
 
 export function AppointmentCreate() {
@@ -38,20 +40,20 @@ export function AppointmentCreate() {
 
   function handleOpenGuilds() {
     setOpenGuildsModal(true);
-  }
+  };
 
   function handleCloseGuilds() {
     setOpenGuildsModal(false);
-  }
+  };
 
   function handleGuildSelect(guildSelect: GuildProps) {
     setGuild(guildSelect);
     setOpenGuildsModal(false);
-  }
+  };
 
   function handleCategorySelect(categoryId: string) {
     setCategory(categoryId);
-  }
+  };
 
   async function handleSave() {
     const newAppointment = {
@@ -71,7 +73,7 @@ export function AppointmentCreate() {
     );
 
     navigation.navigate('Home' as never);
-  }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -104,7 +106,7 @@ export function AppointmentCreate() {
                   guild.icon
                     ? <GuildIcon guildId={guild.id} iconId={guild.icon} />
                     : <View style={styles.image} />
-                }
+                };
 
                 <View style={styles.selectBody}>
                   <Text style={styles.label}>
@@ -112,7 +114,7 @@ export function AppointmentCreate() {
                       guild.name
                         ? guild.name
                         : 'Selecione um servidor'
-                    }
+                    };
                   </Text>
                 </View>
 
@@ -200,4 +202,4 @@ export function AppointmentCreate() {
 
     </KeyboardAvoidingView>
   );
-}
+};

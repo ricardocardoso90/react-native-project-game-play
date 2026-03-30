@@ -1,13 +1,14 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import { useAuthRequest, ResponseType, makeRedirectUri, } from "expo-auth-session";
-
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { useAuthRequest, ResponseType, makeRedirectUri, } from "expo-auth-session";
+
 const extra = Constants.expoConfig?.extra || {};
+const { COLLECTION_USERS } = require("../configs/database");
+
 const CLIENT_ID = extra.CLIENT_ID || "";
 const CDN_IMAGE = extra.CDN_IMAGE || "https://cdn.discordapp.com";
-const { COLLECTION_USERS } = require("../configs/database");
 
 type User = {
   id: string;
@@ -67,12 +68,12 @@ function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       setLoading(false);
     }
-  }
+  };
 
   async function signOut() {
     setUser({} as User);
     await AsyncStorage.removeItem(COLLECTION_USERS);
-  }
+  };
 
   async function loadUserStorageData() {
     const storage = await AsyncStorage.getItem(COLLECTION_USERS);
@@ -81,16 +82,16 @@ function AuthProvider({ children }: AuthProviderProps) {
       const userLogged = JSON.parse(storage) as User;
       setUser(userLogged);
     }
-  }
+  };
 
   useEffect(() => {
     console.log("=== USEEFFECT RESPONSE ===");
     console.log("Response:", JSON.stringify(response, null, 2));
-    
+
     if (response?.type === "success" && response.params?.code) {
       console.log("✅ Código de autorização recebido, trocando por token...");
       setLoading(true);
-      
+
       const tokenData = {
         client_id: CLIENT_ID,
         client_secret: '',
@@ -98,7 +99,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         code: response.params.code,
         redirect_uri: redirectUri,
       };
-      
+
       fetch('https://discord.com/api/oauth2/token', {
         method: 'POST',
         headers: {
@@ -168,11 +169,11 @@ function AuthProvider({ children }: AuthProviderProps) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 function useAuth() {
   const context = useContext(AuthContext);
   return context;
-}
+};
 
 export { AuthProvider, useAuth };

@@ -1,27 +1,21 @@
-import React from 'react';
-import { 
-  TouchableOpacity, 
-  TouchableOpacityProps, 
-  Text, 
-  View 
-} from 'react-native';
-import { Feather } from '@expo/vector-icons';
 
 import { styles } from './styles';
-import { theme } from '../../global/styles/theme';
+import { theme } from '../../hooks/theme';
+import { TouchableOpacity, TouchableOpacityProps, Text, View } from 'react-native';
 
 import { GuildIcon } from '../GuildIcon';
+import { Feather } from '@expo/vector-icons';
 
 export type GuildProps = {
   id: string;
   name: string;
   icon: string | null;
   owner: boolean;
-}
+};
 
 type Props = TouchableOpacityProps & {
   data: GuildProps;
-}
+};
 
 export function Guild({data, ...rest}: Props){
   return (
@@ -51,4 +45,4 @@ export function Guild({data, ...rest}: Props){
         />
     </TouchableOpacity>
   );
-}
+};

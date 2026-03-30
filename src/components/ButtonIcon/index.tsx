@@ -1,13 +1,14 @@
 import React from 'react';
+import { styles } from './styles';
+
 import { Text, Image, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
 import DiscordImg from '../../assets/discord.png';
-import { styles } from './styles';
 
 type Props = RectButtonProps & {
   title: string;
-}
+};
 
 export function ButtonIcon({ title, ...rest } : Props){
   return(
@@ -24,4 +25,4 @@ export function ButtonIcon({ title, ...rest } : Props){
       </Text>
     </RectButton>
   );
-}
+};

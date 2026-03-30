@@ -1,11 +1,9 @@
-import React from 'react';
+import { styles } from './styles';
 import { View, Text, Alert } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
-
-import { useAuth } from '../../hooks/auth';
 
 import { Avatar } from '../Avatar';
-import { styles } from './styles';
+import { useAuth } from '../../hooks/auth';
+import { RectButton } from 'react-native-gesture-handler';
 
 export function Profile() {
   const { user, signOut } = useAuth();
@@ -22,7 +20,7 @@ export function Profile() {
           onPress: () => signOut()
         }
       ])
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -49,5 +47,4 @@ export function Profile() {
 
     </View>
   )
-
-}
+};
