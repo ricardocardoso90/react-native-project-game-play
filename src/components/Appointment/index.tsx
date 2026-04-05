@@ -3,7 +3,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
 import { styles } from './styles';
-import { theme } from '../../hooks/theme';
 
 import PlayerSvg from '../../assets/player.svg';
 import CalendarSvg from '../../assets/calendar.svg';
@@ -11,6 +10,7 @@ import CalendarSvg from '../../assets/calendar.svg';
 import { GuildProps } from '../Guild';
 import { GuildIcon } from '../GuildIcon';
 import { categories } from '../../utils/categories';
+import { theme } from '../../global/styles/theme';
 
 
 export type AppointmentProps = {

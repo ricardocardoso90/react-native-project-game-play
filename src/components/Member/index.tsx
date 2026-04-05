@@ -1,7 +1,7 @@
 import { styles } from './styles';
 import { Avatar } from '../Avatar';
 import { View, Text } from 'react-native';
-import { theme } from '../../hooks/theme';
+import { theme } from '../../global/styles/theme';
 
 export type MemberProps = {
   id: string;

@@ -1,5 +1,5 @@
+import { theme } from '../../global/styles/theme';
 import { styles } from './styles';
-import { theme } from '../../hooks/theme';
 
 import { View, ActivityIndicator } from 'react-native';
 

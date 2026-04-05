@@ -1,6 +1,5 @@
 import { styles } from './style';
 import React, { ReactNode } from 'react';
-import { theme } from '../../hooks/theme';
 
 import { Text, View } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
@@ -8,6 +7,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import { theme } from '../../global/styles/theme';
 
 type Props = {
   title: string;
